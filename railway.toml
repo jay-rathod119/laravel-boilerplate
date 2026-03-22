@@ -1,0 +1,4 @@
+# https://docs.railway.com/deployments/start-command
+# Binds to Railway's $PORT so Public Networking can target the same port (e.g. 8000).
+[deploy]
+startCommand = "php artisan serve --host=0.0.0.0 --port=$PORT"
