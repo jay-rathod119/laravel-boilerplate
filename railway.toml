@@ -1,4 +1,9 @@
 # https://docs.railway.com/deployments/start-command
-# Binds to Railway's $PORT so Public Networking can target the same port (e.g. 8000).
+# Binds to Railway's $PORT. Match Public Networking → port to the number in deploy logs
+# (often 8080). If they differ, the URL resolves but the site will not load.
+#
+# SQLite is not committed; session/cache/queue use the DB, so the file must exist before
+# the app boots. Pre-deploy cannot persist files into the runtime image (Railway runs it
+# in a separate container), so create + migrate here on each start (migrations are no-ops when up to date).
 [deploy]
-startCommand = "php artisan serve --host=0.0.0.0 --port=$PORT"
+startCommand = "touch database/database.sqlite && php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=$PORT"
