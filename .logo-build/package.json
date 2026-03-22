@@ -1,0 +1,8 @@
+{
+  "name": "logo-build",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "pdf-img-convert": "^2.0.0"
+  }
+}
