@@ -1,0 +1,22 @@
+Railway configuration (quick setup)
+===================================
+
+1) deploy/railway.env
+   - Open this file in your repo.
+   - Replace REPLACE_WITH_YOUR_RAILWAY_DOMAIN with the hostname from Railway:
+     Networking -> your public URL (no https:// prefix in the middle segment:
+     use full APP_URL like https://your-service.up.railway.app with NO trailing slash).
+   - Set APP_KEY to the output of (on your PC, in the project folder):
+     php artisan key:generate --show
+
+2) Railway dashboard -> your web service -> Variables
+   - Use "Import" / "Raw editor" and paste the contents of deploy/railway.env, OR
+   - Upload the file if Railway offers "Import .env".
+
+3) Do not wrap values in quotes. Leave empty vars as KEY= with nothing after =.
+
+4) Deploy / redeploy. Start command is set in railway.toml (docker/railway-entrypoint.sh):
+   creates SQLite, runs migrations, then php artisan serve on $PORT.
+
+5) For production data, switch to Postgres later and set DB_CONNECTION=pgsql and DB_URL
+   from Railway's database service (SQLite resets when the container is replaced).

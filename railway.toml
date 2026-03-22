@@ -6,4 +6,4 @@
 # the app boots. Pre-deploy cannot persist files into the runtime image (Railway runs it
 # in a separate container), so create + migrate here on each start (migrations are no-ops when up to date).
 [deploy]
-startCommand = "touch database/database.sqlite && php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=$PORT"
+startCommand = "sh docker/railway-entrypoint.sh"
