@@ -22,6 +22,9 @@ WORKDIR /app
 # Copy project files
 COPY . .
 
+# Ensure startup script is executable
+RUN chmod +x docker/railway-entrypoint.sh
+
 # Install Laravel dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
@@ -31,5 +34,5 @@ RUN chmod -R 775 storage bootstrap/cache
 # Expose port
 EXPOSE 10000
 
-# Start Laravel server
-CMD ["sh", "-c", "php artisan serve --host=0.0.0.0 --port=${PORT:-10000}"]
+# Start app via entrypoint (creates sqlite file, runs migrations, serves app)
+CMD ["sh", "docker/railway-entrypoint.sh"]
